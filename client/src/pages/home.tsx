@@ -1,5 +1,7 @@
 import { CalculatorCard } from "@/components/calculator-card";
-import { Coins, TrendingUp, Wallet, ArrowDownToLine } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
+import { Coins, TrendingUp, Wallet, ArrowDownToLine, GitCompare } from "lucide-react";
 
 export default function Home() {
   const calculators = [
@@ -46,6 +48,15 @@ export default function Home() {
           {calculators.map((calculator) => (
             <CalculatorCard key={calculator.path} {...calculator} />
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link href="/compare">
+            <Button size="lg" variant="outline" className="gap-2" data-testid="button-compare-scenarios">
+              <GitCompare className="w-5 h-5" />
+              Compare Scenarios
+            </Button>
+          </Link>
         </div>
 
         <div className="mt-16 bg-card rounded-lg p-8 border">
