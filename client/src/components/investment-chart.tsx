@@ -14,6 +14,27 @@ export function InvestmentChart({ investedAmount, returns }: InvestmentChartProp
 
   const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))"];
 
+  const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+        fontSize="16"
+        fontWeight="600"
+      >
+        {`${(percent * 100).toFixed(1)}%`}
+      </text>
+    );
+  };
+
   return (
     <Card className="p-6">
       <h3 className="text-lg font-semibold mb-4" data-testid="text-chart-title">
@@ -25,8 +46,8 @@ export function InvestmentChart({ investedAmount, returns }: InvestmentChartProp
             data={data}
             cx="50%"
             cy="50%"
-            labelLine={true}
-            label={({ percent }) => `${(percent * 100).toFixed(1)}%`}
+            labelLine={false}
+            label={renderCustomLabel}
             outerRadius={90}
             fill="#8884d8"
             dataKey="value"
