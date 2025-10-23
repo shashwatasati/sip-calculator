@@ -35,6 +35,17 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         <div className="text-center mb-12">
+          <div className="mb-3">
+            <a 
+              href="https://shashwatasati.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-primary hover:underline"
+              data-testid="link-brand"
+            >
+              shashwatasati.com
+            </a>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4" data-testid="text-page-title">
             Financial Calculator Suite
           </h1>
