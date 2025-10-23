@@ -7,6 +7,7 @@ import { ResultCard } from "@/components/result-card";
 import { InvestmentChart } from "@/components/investment-chart";
 import { GrowthChart } from "@/components/growth-chart";
 import { BreakdownTable } from "@/components/breakdown-table";
+import { Disclaimer } from "@/components/disclaimer";
 import { calculateSIPStepUp } from "@/lib/calculations";
 import type { SIPStepUpInput } from "@shared/schema";
 
@@ -34,9 +35,10 @@ export default function SIPStepUpCalculator() {
           <h1 className="text-3xl md:text-4xl font-bold mb-2" data-testid="text-calculator-title">
             SIP Step-up Calculator
           </h1>
-          <p className="text-muted-foreground" data-testid="text-calculator-description">
+          <p className="text-muted-foreground mb-4" data-testid="text-calculator-description">
             Calculate returns with annually increasing investment amounts
           </p>
+          <Disclaimer />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
