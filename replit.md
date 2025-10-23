@@ -39,7 +39,12 @@ Each calculator features:
 client/
   index.html - Main HTML with SEO meta tags and Open Graph tags
   favicon.svg - Calculator icon logo (optimized SVG, <1KB)
-  favicon.png - Fallback calculator icon (for Apple devices)
+  favicon.png - Primary favicon (32x32, 16x16)
+  apple-touch-icon.png - Apple devices icon (180x180)
+  icon-192.png - Android icon (192x192)
+  icon-512.png - Large displays icon (512x512)
+  og-image.png - Social sharing image (1200x630)
+  manifest.json - PWA manifest for mobile installation
   src/
     components/
       header.tsx - Global header with logo and branding
