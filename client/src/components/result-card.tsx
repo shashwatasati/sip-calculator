@@ -38,7 +38,7 @@ export function ResultCard({ title, value, icon: Icon, variant = "primary", test
           </p>
           <Icon className={`w-5 h-5 ${iconColors[variant]}`} />
         </div>
-        <p className={`text-3xl font-bold ${textColors[variant]}`} data-testid={`value-${testId}`}>
+        <p className={`text-2xl md:text-3xl font-bold ${textColors[variant]} break-words`} data-testid={`value-${testId}`}>
           {formatCurrency(value)}
         </p>
       </CardContent>
