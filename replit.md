@@ -14,7 +14,8 @@ Each calculator features:
 - Interactive input sliders with real-time calculations
 - Visual charts and graphs (Recharts library)
 - Year-wise breakdown tables
-- Downloadable PDF and Excel reports
+- Legal disclaimer for investment advice compliance
+- Currency display in Indian Rupees (₹) throughout
 
 ## Tech Stack
 
@@ -25,8 +26,7 @@ Each calculator features:
 - Shadcn UI components
 - Tailwind CSS for styling
 - Recharts for data visualization
-- jsPDF for PDF generation
-- XLSX for Excel exports
+- Lucide React for icons
 
 ### Backend
 - Express.js server
@@ -39,11 +39,13 @@ Each calculator features:
 client/
   src/
     components/
+      header.tsx - Global header with logo and branding
+      footer.tsx - Global footer with copyright and attribution
+      disclaimer.tsx - Disclaimer alert for legal compliance
       calculator-card.tsx - Calculator selection cards
       input-slider.tsx - Input slider with text input combination
       result-card.tsx - Metric display cards
       breakdown-table.tsx - Year-wise breakdown tables
-      download-buttons.tsx - PDF/Excel download buttons
       save-calculation-dialog.tsx - Dialog for saving calculations
       investment-chart.tsx - Pie chart for investment breakdown
       growth-chart.tsx - Area chart for growth projection
@@ -106,10 +108,11 @@ All calculations use standard financial formulas:
 - Bar charts for withdrawal projections
 - All charts responsive and interactive
 
-### Export Functionality
-- PDF reports with calculation summary and inputs
-- Excel spreadsheets with detailed yearly breakdowns
-- Both formats include all calculation parameters
+### Branding & Legal
+- **Header**: Global sticky header on all pages with Calculator logo icon, "Financial Calculators by Shashwat Asati" branding, and link to shashwatasati.com
+- **Footer**: Copyright notice "© 2025 shashwatasati.com" and "Made with ❤️ by Shashwat Asati" on all pages
+- **Disclaimer**: Educational use disclaimer positioned at bottom of each calculator page for legal compliance
+- All branding elements link to shashwatasati.com for blog traffic
 
 ### Calculation History
 - Save calculations with custom names to PostgreSQL database
