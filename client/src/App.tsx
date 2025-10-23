@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import Home from "@/pages/home";
 import SIPCalculator from "@/pages/sip-calculator";
@@ -33,6 +34,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="flex flex-col min-h-screen">
+          <Header />
           <div className="flex-1">
             <Router />
           </div>
