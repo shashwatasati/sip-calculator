@@ -7,12 +7,9 @@ import { ResultCard } from "@/components/result-card";
 import { InvestmentChart } from "@/components/investment-chart";
 import { GrowthChart } from "@/components/growth-chart";
 import { BreakdownTable } from "@/components/breakdown-table";
-import { DownloadButtons } from "@/components/download-buttons";
 import { SaveCalculationDialog } from "@/components/save-calculation-dialog";
 import { calculateSIP } from "@/lib/calculations";
 import type { SIPInput } from "@shared/schema";
-import jsPDF from "jspdf";
-import * as XLSX from "xlsx";
 
 export default function SIPCalculator() {
   const [inputs, setInputs] = useState<SIPInput>({
@@ -22,63 +19,6 @@ export default function SIPCalculator() {
   });
 
   const results = calculateSIP(inputs);
-
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF();
-    
-    doc.setFontSize(20);
-    doc.text("SIP Calculator Report", 20, 20);
-    
-    doc.setFontSize(12);
-    doc.text(`Monthly Investment: ₹${inputs.monthlyInvestment.toLocaleString()}`, 20, 40);
-    doc.text(`Duration: ${inputs.durationYears} years`, 20, 50);
-    doc.text(`Expected Return: ${inputs.expectedReturn}% p.a.`, 20, 60);
-    
-    doc.setFontSize(14);
-    doc.text("Results:", 20, 80);
-    doc.setFontSize(12);
-    doc.text(`Total Value: ₹${results.totalValue.toLocaleString()}`, 20, 95);
-    doc.text(`Invested Amount: ₹${results.investedAmount.toLocaleString()}`, 20, 105);
-    doc.text(`Estimated Returns: ₹${results.estimatedReturns.toLocaleString()}`, 20, 115);
-    
-    doc.save("sip-calculator-report.pdf");
-  };
-
-  const handleDownloadExcel = async () => {
-    const wb = XLSX.utils.book_new();
-    
-    const summaryData = [
-      ["SIP Calculator Report"],
-      [""],
-      ["Inputs"],
-      ["Monthly Investment", `₹${inputs.monthlyInvestment.toLocaleString()}`],
-      ["Duration", `${inputs.durationYears} years`],
-      ["Expected Return", `${inputs.expectedReturn}%`],
-      [""],
-      ["Results"],
-      ["Total Value", `₹${results.totalValue.toLocaleString()}`],
-      ["Invested Amount", `₹${results.investedAmount.toLocaleString()}`],
-      ["Estimated Returns", `₹${results.estimatedReturns.toLocaleString()}`],
-    ];
-    
-    const breakdownData = [
-      ["Year", "Invested Amount", "Total Value", "Returns"],
-      ...results.yearlyBreakdown.map((row) => [
-        row.year,
-        row.invested,
-        row.value,
-        row.returns,
-      ]),
-    ];
-    
-    const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-    const ws2 = XLSX.utils.aoa_to_sheet(breakdownData);
-    
-    XLSX.utils.book_append_sheet(wb, ws1, "Summary");
-    XLSX.utils.book_append_sheet(wb, ws2, "Yearly Breakdown");
-    
-    XLSX.writeFile(wb, "sip-calculator-report.xlsx");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -196,10 +136,6 @@ export default function SIPCalculator() {
               calculatorType="sip"
               inputs={inputs}
               results={results}
-            />
-            <DownloadButtons
-              onDownloadPDF={handleDownloadPDF}
-              onDownloadExcel={handleDownloadExcel}
             />
           </div>
         </div>

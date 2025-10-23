@@ -7,11 +7,8 @@ import { ResultCard } from "@/components/result-card";
 import { InvestmentChart } from "@/components/investment-chart";
 import { GrowthChart } from "@/components/growth-chart";
 import { BreakdownTable } from "@/components/breakdown-table";
-import { DownloadButtons } from "@/components/download-buttons";
 import { calculateSIPStepUp } from "@/lib/calculations";
 import type { SIPStepUpInput } from "@shared/schema";
-import jsPDF from "jspdf";
-import * as XLSX from "xlsx";
 
 export default function SIPStepUpCalculator() {
   const [inputs, setInputs] = useState<SIPStepUpInput>({
@@ -22,66 +19,6 @@ export default function SIPStepUpCalculator() {
   });
 
   const results = calculateSIPStepUp(inputs);
-
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF();
-    
-    doc.setFontSize(20);
-    doc.text("SIP Step-up Calculator Report", 20, 20);
-    
-    doc.setFontSize(12);
-    doc.text(`Initial Monthly Investment: ₹${inputs.monthlyInvestment.toLocaleString()}`, 20, 40);
-    doc.text(`Duration: ${inputs.durationYears} years`, 20, 50);
-    doc.text(`Expected Return: ${inputs.expectedReturn}% p.a.`, 20, 60);
-    doc.text(`Annual Increase: ${inputs.annualIncrease}%`, 20, 70);
-    
-    doc.setFontSize(14);
-    doc.text("Results:", 20, 90);
-    doc.setFontSize(12);
-    doc.text(`Total Value: ₹${results.totalValue.toLocaleString()}`, 20, 105);
-    doc.text(`Invested Amount: ₹${results.investedAmount.toLocaleString()}`, 20, 115);
-    doc.text(`Estimated Returns: ₹${results.estimatedReturns.toLocaleString()}`, 20, 125);
-    
-    doc.save("sip-stepup-calculator-report.pdf");
-  };
-
-  const handleDownloadExcel = async () => {
-    const wb = XLSX.utils.book_new();
-    
-    const summaryData = [
-      ["SIP Step-up Calculator Report"],
-      [""],
-      ["Inputs"],
-      ["Initial Monthly Investment", `₹${inputs.monthlyInvestment.toLocaleString()}`],
-      ["Duration", `${inputs.durationYears} years`],
-      ["Expected Return", `${inputs.expectedReturn}%`],
-      ["Annual Increase", `${inputs.annualIncrease}%`],
-      [""],
-      ["Results"],
-      ["Total Value", `₹${results.totalValue.toLocaleString()}`],
-      ["Invested Amount", `₹${results.investedAmount.toLocaleString()}`],
-      ["Estimated Returns", `₹${results.estimatedReturns.toLocaleString()}`],
-    ];
-    
-    const breakdownData = [
-      ["Year", "Monthly Investment", "Invested Amount", "Total Value", "Returns"],
-      ...results.yearlyBreakdown.map((row) => [
-        row.year,
-        row.monthlyInvestment,
-        row.invested,
-        row.value,
-        row.returns,
-      ]),
-    ];
-    
-    const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-    const ws2 = XLSX.utils.aoa_to_sheet(breakdownData);
-    
-    XLSX.utils.book_append_sheet(wb, ws1, "Summary");
-    XLSX.utils.book_append_sheet(wb, ws2, "Yearly Breakdown");
-    
-    XLSX.writeFile(wb, "sip-stepup-calculator-report.xlsx");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -204,12 +141,6 @@ export default function SIPStepUpCalculator() {
                 { key: "value", label: "Total Value" },
                 { key: "returns", label: "Returns" },
               ]}
-            />
-          </div>
-          <div>
-            <DownloadButtons
-              onDownloadPDF={handleDownloadPDF}
-              onDownloadExcel={handleDownloadExcel}
             />
           </div>
         </div>

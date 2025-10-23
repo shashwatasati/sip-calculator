@@ -7,11 +7,8 @@ import { ResultCard } from "@/components/result-card";
 import { InvestmentChart } from "@/components/investment-chart";
 import { GrowthChart } from "@/components/growth-chart";
 import { BreakdownTable } from "@/components/breakdown-table";
-import { DownloadButtons } from "@/components/download-buttons";
 import { calculateLumpSum } from "@/lib/calculations";
 import type { LumpSumInput } from "@shared/schema";
-import jsPDF from "jspdf";
-import * as XLSX from "xlsx";
 
 export default function LumpSumCalculator() {
   const [inputs, setInputs] = useState<LumpSumInput>({
@@ -21,62 +18,6 @@ export default function LumpSumCalculator() {
   });
 
   const results = calculateLumpSum(inputs);
-
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF();
-    
-    doc.setFontSize(20);
-    doc.text("Lump Sum Calculator Report", 20, 20);
-    
-    doc.setFontSize(12);
-    doc.text(`Investment Amount: ₹${inputs.investment.toLocaleString()}`, 20, 40);
-    doc.text(`Duration: ${inputs.durationYears} years`, 20, 50);
-    doc.text(`Expected Return: ${inputs.expectedReturn}% p.a.`, 20, 60);
-    
-    doc.setFontSize(14);
-    doc.text("Results:", 20, 80);
-    doc.setFontSize(12);
-    doc.text(`Total Value: ₹${results.totalValue.toLocaleString()}`, 20, 95);
-    doc.text(`Invested Amount: ₹${results.investedAmount.toLocaleString()}`, 20, 105);
-    doc.text(`Estimated Returns: ₹${results.estimatedReturns.toLocaleString()}`, 20, 115);
-    
-    doc.save("lumpsum-calculator-report.pdf");
-  };
-
-  const handleDownloadExcel = async () => {
-    const wb = XLSX.utils.book_new();
-    
-    const summaryData = [
-      ["Lump Sum Calculator Report"],
-      [""],
-      ["Inputs"],
-      ["Investment Amount", `₹${inputs.investment.toLocaleString()}`],
-      ["Duration", `${inputs.durationYears} years`],
-      ["Expected Return", `${inputs.expectedReturn}%`],
-      [""],
-      ["Results"],
-      ["Total Value", `₹${results.totalValue.toLocaleString()}`],
-      ["Invested Amount", `₹${results.investedAmount.toLocaleString()}`],
-      ["Estimated Returns", `₹${results.estimatedReturns.toLocaleString()}`],
-    ];
-    
-    const breakdownData = [
-      ["Year", "Total Value", "Returns"],
-      ...results.yearlyBreakdown.map((row) => [
-        row.year,
-        row.value,
-        row.returns,
-      ]),
-    ];
-    
-    const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-    const ws2 = XLSX.utils.aoa_to_sheet(breakdownData);
-    
-    XLSX.utils.book_append_sheet(wb, ws1, "Summary");
-    XLSX.utils.book_append_sheet(wb, ws2, "Yearly Breakdown");
-    
-    XLSX.writeFile(wb, "lumpsum-calculator-report.xlsx");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -186,12 +127,6 @@ export default function LumpSumCalculator() {
                 { key: "value", label: "Total Value" },
                 { key: "returns", label: "Returns" },
               ]}
-            />
-          </div>
-          <div>
-            <DownloadButtons
-              onDownloadPDF={handleDownloadPDF}
-              onDownloadExcel={handleDownloadExcel}
             />
           </div>
         </div>

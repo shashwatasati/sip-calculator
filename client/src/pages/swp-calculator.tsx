@@ -6,12 +6,9 @@ import { InputSlider } from "@/components/input-slider";
 import { ResultCard } from "@/components/result-card";
 import { Card } from "@/components/ui/card";
 import { BreakdownTable } from "@/components/breakdown-table";
-import { DownloadButtons } from "@/components/download-buttons";
 import { calculateSWP } from "@/lib/calculations";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import type { SWPInput } from "@shared/schema";
-import jsPDF from "jspdf";
-import * as XLSX from "xlsx";
 
 export default function SWPCalculator() {
   const [inputs, setInputs] = useState<SWPInput>({
@@ -22,65 +19,6 @@ export default function SWPCalculator() {
   });
 
   const results = calculateSWP(inputs);
-
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF();
-    
-    doc.setFontSize(20);
-    doc.text("SWP Calculator Report", 20, 20);
-    
-    doc.setFontSize(12);
-    doc.text(`Initial Investment: ₹${inputs.investment.toLocaleString()}`, 20, 40);
-    doc.text(`Monthly Withdrawal: ₹${inputs.monthlyWithdrawal.toLocaleString()}`, 20, 50);
-    doc.text(`Duration: ${inputs.durationYears} years`, 20, 60);
-    doc.text(`Expected Return: ${inputs.expectedReturn}% p.a.`, 20, 70);
-    
-    doc.setFontSize(14);
-    doc.text("Results:", 20, 90);
-    doc.setFontSize(12);
-    doc.text(`Total Withdrawn: ₹${results.totalWithdrawn.toLocaleString()}`, 20, 105);
-    doc.text(`Remaining Corpus: ₹${results.remainingCorpus.toLocaleString()}`, 20, 115);
-    doc.text(`Total Returns: ₹${results.totalReturns.toLocaleString()}`, 20, 125);
-    
-    doc.save("swp-calculator-report.pdf");
-  };
-
-  const handleDownloadExcel = async () => {
-    const wb = XLSX.utils.book_new();
-    
-    const summaryData = [
-      ["SWP Calculator Report"],
-      [""],
-      ["Inputs"],
-      ["Initial Investment", `₹${inputs.investment.toLocaleString()}`],
-      ["Monthly Withdrawal", `₹${inputs.monthlyWithdrawal.toLocaleString()}`],
-      ["Duration", `${inputs.durationYears} years`],
-      ["Expected Return", `${inputs.expectedReturn}%`],
-      [""],
-      ["Results"],
-      ["Total Withdrawn", `₹${results.totalWithdrawn.toLocaleString()}`],
-      ["Remaining Corpus", `₹${results.remainingCorpus.toLocaleString()}`],
-      ["Total Returns", `₹${results.totalReturns.toLocaleString()}`],
-    ];
-    
-    const breakdownData = [
-      ["Year", "Withdrawn", "Remaining Corpus", "Returns"],
-      ...results.yearlyBreakdown.map((row) => [
-        row.year,
-        row.withdrawn,
-        row.remainingCorpus,
-        row.returns,
-      ]),
-    ];
-    
-    const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-    const ws2 = XLSX.utils.aoa_to_sheet(breakdownData);
-    
-    XLSX.utils.book_append_sheet(wb, ws1, "Summary");
-    XLSX.utils.book_append_sheet(wb, ws2, "Yearly Breakdown");
-    
-    XLSX.writeFile(wb, "swp-calculator-report.xlsx");
-  };
 
   const chartData = results.yearlyBreakdown.map((item) => ({
     year: `Year ${item.year}`,
@@ -234,12 +172,6 @@ export default function SWPCalculator() {
                 { key: "remainingCorpus", label: "Remaining Corpus" },
                 { key: "returns", label: "Returns" },
               ]}
-            />
-          </div>
-          <div>
-            <DownloadButtons
-              onDownloadPDF={handleDownloadPDF}
-              onDownloadExcel={handleDownloadExcel}
             />
           </div>
         </div>
