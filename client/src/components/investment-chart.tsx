@@ -25,9 +25,9 @@ export function InvestmentChart({ investedAmount, returns }: InvestmentChartProp
             data={data}
             cx="50%"
             cy="50%"
-            labelLine={false}
-            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
-            outerRadius={80}
+            labelLine={true}
+            label={({ percent }) => `${(percent * 100).toFixed(1)}%`}
+            outerRadius={90}
             fill="#8884d8"
             dataKey="value"
           >
@@ -44,7 +44,10 @@ export function InvestmentChart({ investedAmount, returns }: InvestmentChartProp
               }).format(value)
             }
           />
-          <Legend />
+          <Legend 
+            wrapperStyle={{ paddingTop: '20px' }}
+            iconType="circle"
+          />
         </PieChart>
       </ResponsiveContainer>
     </Card>
