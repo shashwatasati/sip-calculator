@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, TrendingUp, DollarSign, PiggyBank } from "lucide-react";
+import { ArrowLeft, TrendingUp, IndianRupee, PiggyBank } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { InputSlider } from "@/components/input-slider";
 import { ResultCard } from "@/components/result-card";
@@ -90,7 +90,7 @@ export default function LumpSumCalculator() {
               <ResultCard
                 title="Invested Amount"
                 value={results.investedAmount}
-                icon={DollarSign}
+                icon={IndianRupee}
                 variant="highlight"
                 testId="invested-amount"
               />

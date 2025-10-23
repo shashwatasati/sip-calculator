@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { InputSlider } from "@/components/input-slider";
 import { ResultCard } from "@/components/result-card";
 import { calculateSIP, calculateSIPStepUp, calculateLumpSum, calculateSWP, formatCurrency } from "@/lib/calculations";
-import { TrendingUp, DollarSign, PiggyBank } from "lucide-react";
+import { TrendingUp, IndianRupee, PiggyBank } from "lucide-react";
 import type { SIPInput, SIPStepUpInput, LumpSumInput, SWPInput } from "@shared/schema";
 
 type CalculatorType = "sip" | "sip-stepup" | "lumpsum" | "swp";

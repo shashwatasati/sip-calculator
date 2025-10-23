@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, TrendingUp, DollarSign, ArrowDownCircle, Wallet } from "lucide-react";
+import { ArrowLeft, TrendingUp, IndianRupee, ArrowDownCircle, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { InputSlider } from "@/components/input-slider";
 import { ResultCard } from "@/components/result-card";
@@ -115,7 +115,7 @@ export default function SWPCalculator() {
               <ResultCard
                 title="Initial Investment"
                 value={results.investedAmount}
-                icon={DollarSign}
+                icon={IndianRupee}
                 variant="success"
                 testId="invested-amount"
               />
