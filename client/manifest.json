@@ -1,0 +1,23 @@
+{
+  "name": "Financial Calculator Suite",
+  "short_name": "SIP Calculator",
+  "description": "Free investment calculators for SIP, Lump Sum, and SWP planning",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1565C0",
+  "theme_color": "#1565C0",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
