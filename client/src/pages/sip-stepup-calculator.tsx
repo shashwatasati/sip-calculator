@@ -35,10 +35,9 @@ export default function SIPStepUpCalculator() {
           <h1 className="text-3xl md:text-4xl font-bold mb-2" data-testid="text-calculator-title">
             SIP Step-up Calculator
           </h1>
-          <p className="text-muted-foreground mb-4" data-testid="text-calculator-description">
+          <p className="text-muted-foreground" data-testid="text-calculator-description">
             Calculate returns with annually increasing investment amounts
           </p>
-          <Disclaimer />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
@@ -145,6 +144,10 @@ export default function SIPStepUpCalculator() {
               ]}
             />
           </div>
+        </div>
+
+        <div className="mt-8">
+          <Disclaimer />
         </div>
       </div>
     </div>
