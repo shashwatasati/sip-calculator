@@ -37,6 +37,9 @@ Each calculator features:
 
 ```
 client/
+  index.html - Main HTML with SEO meta tags and Open Graph tags
+  favicon.svg - Calculator icon logo (optimized SVG, <1KB)
+  favicon.png - Fallback calculator icon (for Apple devices)
   src/
     components/
       header.tsx - Global header with logo and branding
@@ -113,6 +116,13 @@ All calculations use standard financial formulas:
 - **Footer**: Copyright notice "© 2025 shashwatasati.com" and "Made with ❤️ by Shashwat Asati" on all pages
 - **Disclaimer**: Educational use disclaimer positioned at bottom of each calculator page for legal compliance
 - All branding elements link to shashwatasati.com for blog traffic
+
+### SEO & Social Sharing
+- **Custom Favicon**: Calculator icon logo in blue (#1565C0) with orange accent
+- **Meta Tags**: Comprehensive SEO meta tags including title, description, keywords, and author
+- **Open Graph Tags**: Facebook/LinkedIn sharing optimization with proper title, description, and image
+- **Twitter Cards**: Twitter sharing optimization with summary card format
+- **Keywords**: SIP calculator, lump sum calculator, SWP calculator, investment calculator, mutual fund calculator, financial planning, India
 
 ### Calculation History
 - Save calculations with custom names to PostgreSQL database
