@@ -30,7 +30,8 @@ Each calculator features:
 
 ### Backend
 - Express.js server
-- In-memory storage (MemStorage)
+- PostgreSQL database with Drizzle ORM (node-postgres driver)
+- RESTful API for calculation history
 
 ## Project Structure
 
@@ -43,6 +44,7 @@ client/
       result-card.tsx - Metric display cards
       breakdown-table.tsx - Year-wise breakdown tables
       download-buttons.tsx - PDF/Excel download buttons
+      save-calculation-dialog.tsx - Dialog for saving calculations
       investment-chart.tsx - Pie chart for investment breakdown
       growth-chart.tsx - Area chart for growth projection
       ui/ - Shadcn UI components
@@ -52,14 +54,17 @@ client/
       sip-stepup-calculator.tsx - SIP Step-up calculator
       lumpsum-calculator.tsx - Lump sum calculator
       swp-calculator.tsx - SWP calculator
+      comparison.tsx - Calculator comparison view
+      history.tsx - Saved calculation history
     lib/
       calculations.ts - Financial calculation functions
       queryClient.ts - TanStack Query configuration
 shared/
-  schema.ts - TypeScript types and Zod schemas
+  schema.ts - TypeScript types, Zod schemas, and database models
 server/
-  routes.ts - API routes (for future backend features)
-  storage.ts - Storage interface
+  db.ts - Database connection (Drizzle + node-postgres)
+  routes.ts - API routes for saved calculations
+  storage.ts - Storage interface and database operations
 ```
 
 ## Design System
@@ -106,6 +111,20 @@ All calculations use standard financial formulas:
 - Excel spreadsheets with detailed yearly breakdowns
 - Both formats include all calculation parameters
 
+### Calculation History
+- Save calculations with custom names to PostgreSQL database
+- View all saved calculations in history page
+- Rename saved calculations inline
+- Delete calculations with confirmation
+- Persistent storage across sessions
+
+### Calculator Comparison
+- Compare up to 4 investment scenarios side-by-side
+- Mix different calculator types in one comparison
+- Independent state management for each scenario
+- Add, duplicate, and remove scenarios dynamically
+- Summary table showing all key metrics
+
 ## Running the Application
 
 The application runs on a single port with Vite serving both frontend and backend:
@@ -119,16 +138,36 @@ This starts:
 - Vite development server for React frontend
 - Both accessible at the same URL
 
+## Database Schema
+
+### saved_calculations
+- `id` (serial): Auto-incrementing primary key
+- `calculatorType` (varchar): Type of calculator (sip, sip-stepup, lumpsum, swp)
+- `name` (varchar): User-provided name for the calculation
+- `inputs` (json): Calculator input parameters
+- `results` (json): Calculated results (derived from inputs)
+- `createdAt` (timestamp): Auto-generated creation timestamp
+
+**Note**: The Update operation only supports renaming calculations (updating the `name` field). Input/result modifications are not supported as they are formula-derived - users should create new calculations with different parameters instead.
+
+## API Endpoints
+
+### Saved Calculations
+- `POST /api/saved-calculations` - Create new saved calculation
+- `GET /api/saved-calculations` - List all saved calculations (ordered by date)
+- `GET /api/saved-calculations/:id` - Get specific calculation
+- `PATCH /api/saved-calculations/:id` - Update calculation name
+- `DELETE /api/saved-calculations/:id` - Delete calculation
+
 ## Future Enhancements
 
 Potential additions for next phase:
-- User authentication and saved calculations
-- Calculation history
-- Comparison mode for side-by-side scenarios
+- User authentication and multi-user support
 - Inflation adjustment options
 - Tax calculation features (LTCG, STCG)
 - Email functionality for reports
 - Goal-based planning tools
+- Shared calculation links
 
 ## Design Inspiration
 

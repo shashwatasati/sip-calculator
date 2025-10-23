@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { pgTable, serial, varchar, text, timestamp, integer, json } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 // SIP Calculator Schema
 export const sipInputSchema = z.object({
@@ -96,3 +98,26 @@ export const exportRequestSchema = z.object({
 });
 
 export type ExportRequest = z.infer<typeof exportRequestSchema>;
+
+// Database Tables
+export const savedCalculations = pgTable("saved_calculations", {
+  id: serial("id").primaryKey(),
+  calculatorType: varchar("calculator_type", { length: 20 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  inputs: json("inputs").notNull(),
+  results: json("results").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertSavedCalculationSchema = createInsertSchema(savedCalculations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const updateSavedCalculationSchema = z.object({
+  name: z.string().min(1).max(255).optional(),
+});
+
+export type InsertSavedCalculation = z.infer<typeof insertSavedCalculationSchema>;
+export type UpdateSavedCalculation = z.infer<typeof updateSavedCalculationSchema>;
+export type SavedCalculation = typeof savedCalculations.$inferSelect;

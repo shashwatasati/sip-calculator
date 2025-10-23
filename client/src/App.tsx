@@ -9,6 +9,7 @@ import SIPStepUpCalculator from "@/pages/sip-stepup-calculator";
 import LumpSumCalculator from "@/pages/lumpsum-calculator";
 import SWPCalculator from "@/pages/swp-calculator";
 import Comparison from "@/pages/comparison";
+import History from "@/pages/history";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/lumpsum" component={LumpSumCalculator} />
       <Route path="/swp" component={SWPCalculator} />
       <Route path="/compare" component={Comparison} />
+      <Route path="/history" component={History} />
       <Route component={NotFound} />
     </Switch>
   );

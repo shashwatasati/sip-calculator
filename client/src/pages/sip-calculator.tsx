@@ -8,6 +8,7 @@ import { InvestmentChart } from "@/components/investment-chart";
 import { GrowthChart } from "@/components/growth-chart";
 import { BreakdownTable } from "@/components/breakdown-table";
 import { DownloadButtons } from "@/components/download-buttons";
+import { SaveCalculationDialog } from "@/components/save-calculation-dialog";
 import { calculateSIP } from "@/lib/calculations";
 import type { SIPInput } from "@shared/schema";
 import jsPDF from "jspdf";
@@ -190,7 +191,12 @@ export default function SIPCalculator() {
               ]}
             />
           </div>
-          <div>
+          <div className="space-y-4">
+            <SaveCalculationDialog
+              calculatorType="sip"
+              inputs={inputs}
+              results={results}
+            />
             <DownloadButtons
               onDownloadPDF={handleDownloadPDF}
               onDownloadExcel={handleDownloadExcel}

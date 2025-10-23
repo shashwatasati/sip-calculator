@@ -1,7 +1,7 @@
 import { CalculatorCard } from "@/components/calculator-card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Coins, TrendingUp, Wallet, ArrowDownToLine, GitCompare } from "lucide-react";
+import { Coins, TrendingUp, Wallet, ArrowDownToLine, GitCompare, History } from "lucide-react";
 
 export default function Home() {
   const calculators = [
@@ -50,11 +50,17 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex justify-center gap-4">
           <Link href="/compare">
             <Button size="lg" variant="outline" className="gap-2" data-testid="button-compare-scenarios">
               <GitCompare className="w-5 h-5" />
               Compare Scenarios
+            </Button>
+          </Link>
+          <Link href="/history">
+            <Button size="lg" variant="outline" className="gap-2" data-testid="button-view-history">
+              <History className="w-5 h-5" />
+              View History
             </Button>
           </Link>
         </div>
